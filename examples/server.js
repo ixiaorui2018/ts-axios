@@ -35,53 +35,107 @@ module.exports = app.listen(port, () => {
 const router = express.Router()
 
 // 简单 get 请求测试
-router.get('/simple/get', function(req, res) {
-  res.json({
-    msg: `hello world`
+registerSimpleRouter()
+// 基础功能实现后测试
+registerBasicRouter()
+// 请求出错情况测试
+registerErrorRouter()
+// 工厂模式封装后测试
+registerExtendRouter()
+
+function registerSimpleRouter() {
+  router.get('/simple/get', function(req, res) {
+    res.json({
+      msg: `hello world`
+    })
   })
-})
+}
 
-// url 参数处理测试
-router.get('/basic/get', function(req, res) {
-  res.json(req.query)
-})
+function registerBasicRouter() {
+  router.get('/basic/get', function(req, res) {
+    res.json(req.query)
+  })
 
-// body 参数处理测试
-router.post('/basic/post', function(req, res) {
-  res.json(req.body)
-})
+  router.post('/basic/post', function(req, res) {
+    res.json(req.body)
+  })
 
-router.post('/basic/buffer', function(req, res) {
-  let msg = []
-  req.on('data', chunk => {
-    if (chunk) {
-      msg.push(chunk)
+  router.post('/basic/buffer', function(req, res) {
+    let msg = []
+    req.on('data', chunk => {
+      if (chunk) {
+        msg.push(chunk)
+      }
+    })
+    req.on('end', () => {
+      let buf = Buffer.concat(msg)
+      res.json(buf.toJSON())
+    })
+  })
+}
+
+function registerErrorRouter() {
+  router.get('/error/get', function(req, res) {
+    if (Math.random() > 0.5) {
+      res.json({
+        msg: `hello world`
+      })
+    } else {
+      res.status(500)
+      res.end()
     }
   })
-  req.on('end', () => {
-    let buf = Buffer.concat(msg)
-    res.json(buf.toJSON())
+
+  router.get('/error/timeout', function(req, res) {
+    setTimeout(() => {
+      res.json({
+        msg: `hello world`
+      })
+    }, 3000)
   })
-})
+}
 
-// 请求出错情况测试
-router.get('/error/get', function(req, res) {
-  if (Math.random() > 0.5) {
+function registerExtendRouter() {
+  router.get('/extend/get', function(req, res) {
     res.json({
-      msg: `hello world`
+      msg: 'hello world'
     })
-  } else {
-    res.status(500)
+  })
+
+  router.options('/extend/options', function(req, res) {
     res.end()
-  }
-})
+  })
 
-router.get('/error/timeout', function(req, res) {
-  setTimeout(() => {
+  router.delete('/extend/delete', function(req, res) {
+    res.end()
+  })
+
+  router.head('/extend/head', function(req, res) {
+    res.end()
+  })
+
+  router.post('/extend/post', function(req, res) {
+    res.json(req.body)
+  })
+
+  router.put('/extend/put', function(req, res) {
+    res.json(req.body)
+  })
+
+  router.patch('/extend/patch', function(req, res) {
+    res.json(req.body)
+  })
+
+  router.get('/extend/user', function(req, res) {
     res.json({
-      msg: `hello world`
+      code: 0,
+      message: 'ok',
+      result: {
+        name: 'jack',
+        age: 18
+      }
     })
-  }, 3000)
-})
+  })
+}
 
 app.use(router)

@@ -1,6 +1,6 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './types/index'
-import { parseHeaders } from './tools/headers'
-import { createAxiosError } from './tools/error'
+import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types/index'
+import { parseHeaders } from '../tools/headers'
+import { createAxiosError } from '../tools/error'
 
 function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     // 设置基本请求格式
-    request.open(method.toUpperCase(), url, true)
+    request.open(method.toUpperCase(), url!, true)
 
     // 自定义超时时间
     if (timeout) {

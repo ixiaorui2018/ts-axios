@@ -13,6 +13,9 @@
 - 使用开源库 [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter) 进行项目初始化✅
 - 完成基础功能并做相对应的测试通过✅
 - 添加错误信息处理模块并做对应的测试通过✅
+- 实现接口扩展并做对应的测试通过✅
+- 实现函数重载支持并做对应的测试通过✅
+- 实现响应数据支持泛型并做对应的测试通过✅
 
 ##### 使用说明：
 

@@ -14,3 +14,11 @@ export function isDate(value: any): value is Date {
 export function isPlainObject(value: any): value is Object {
   return value != null && toString.call(value) === '[object Object]'
 }
+
+// 混合对象实现方法
+export function extend<T, U>(to: T, from: U): T & U {
+  for (const key in from) {
+    ;(to as T & U)[key] = from[key] as any
+  }
+  return to as T & U
+}
