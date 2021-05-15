@@ -11,7 +11,8 @@
 ##### 实现记录：
 
 - 使用开源库 [typescript-library-starter](https://github.com/alexjoverm/typescript-library-starter) 进行项目初始化✅
-- 完成基础功能并做相对应的单元测试通过✅
+- 完成基础功能并做相对应的测试通过✅
+- 添加错误信息处理模块并做对应的测试通过✅
 
 ##### 使用说明：
 
