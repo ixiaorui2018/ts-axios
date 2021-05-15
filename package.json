@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "main": "dist/ts-axios.umd.js",
-  "module": "dist/ts-axios.es5.js",
-  "typings": "dist/types/ts-axios.d.ts",
+  "main": "dist/axios.umd.js",
+  "module": "dist/axios.es5.js",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
@@ -19,6 +19,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
+    "dev": "nodemon examples/server.js",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
@@ -115,6 +116,13 @@
     "tslint-config-prettier": "^1.15.0",
     "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.12.0",
-    "typescript": "^3.0.3"
+    "typescript": "^3.0.3",
+    "webpack": "^4.28.4",
+    "webpack-dev-middleware": "^3.5.0",
+    "webpack-hot-middleware": "^2.24.3",
+    "ts-loader": "^5.3.3",
+    "tslint-loader": "^3.5.4",
+    "express": "^4.16.4",
+    "body-parser": "^1.18.3"
   }
 }
