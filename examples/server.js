@@ -44,6 +44,8 @@ registerErrorRouter()
 registerExtendRouter()
 // 添加拦截器后测试
 registerInterceptorRouter()
+// 添加默认配置后测试
+registerConfigRouter()
 
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
@@ -143,6 +145,12 @@ function registerExtendRouter() {
 function registerInterceptorRouter() {
   router.get('/interceptor/get', function(req, res) {
     res.end('hello')
+  })
+}
+
+function registerConfigRouter() {
+  router.post('/config/post', function(req, res) {
+    res.json(req.body)
   })
 }
 

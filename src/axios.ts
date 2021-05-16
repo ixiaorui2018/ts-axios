@@ -1,17 +1,23 @@
-import { AxiosInstance } from './types'
+import { AxiosStatic, AxiosRequestConfig } from './types'
 import Axios from './core/Axios'
 import { extend } from './tools/utils'
+import defaults from './default'
+import mergeConfig from './core/mergeConfig'
 
 // 工厂函数出现了
-function createInstance(): AxiosInstance {
-  const context = new Axios()
+function createInstance(config: AxiosRequestConfig): AxiosStatic {
+  const context = new Axios(config)
   const instance = Axios.prototype.request.bind(context)
 
   extend(instance, context)
 
-  return instance as AxiosInstance
+  return instance as AxiosStatic
 }
 
-const axios = createInstance()
+const axios = createInstance(defaults)
+
+axios.create = function create(config) {
+  return createInstance(mergeConfig(defaults, config))
+}
 
 export default axios
