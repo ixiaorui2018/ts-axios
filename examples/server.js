@@ -42,6 +42,8 @@ registerBasicRouter()
 registerErrorRouter()
 // 工厂模式封装后测试
 registerExtendRouter()
+// 添加拦截器后测试
+registerInterceptorRouter()
 
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
@@ -135,6 +137,12 @@ function registerExtendRouter() {
         age: 18
       }
     })
+  })
+}
+
+function registerInterceptorRouter() {
+  router.get('/interceptor/get', function(req, res) {
+    res.end('hello')
   })
 }
 
