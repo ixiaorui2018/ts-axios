@@ -5,7 +5,7 @@ import { createAxiosError } from '../tools/error'
 function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest()
-    const { data = null, url, method = 'GET', headers, responseType, timeout } = config
+    const { data = null, url, method = 'GET', headers, responseType, timeout, cancelToken } = config
 
     // 自定义返回数据格式
     if (responseType) {
@@ -28,6 +28,15 @@ function xhr(config: AxiosRequestConfig): AxiosPromise {
         request.setRequestHeader(name, headers[name])
       }
     })
+
+    // 取消请求
+    if (cancelToken) {
+      // tslint:disable-next-line: no-floating-promises
+      cancelToken.promise.then(reason => {
+        request.abort()
+        reject(reason)
+      })
+    }
 
     // 发起请求
     request.send(data)
