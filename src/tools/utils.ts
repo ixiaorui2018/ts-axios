@@ -46,3 +46,8 @@ export function deepMerge(...objs: any[]): any {
 
   return result
 }
+
+// 判断是否为表单数据
+export function isFormData(val: any): boolean {
+  return typeof val !== 'undefined' && val instanceof FormData
+}
