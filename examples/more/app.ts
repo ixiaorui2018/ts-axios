@@ -1,6 +1,7 @@
 import axios from '../../src/index'
 import NProgress from 'nprogress'
 import { AxiosError } from '../../src/tools/error'
+import qs from 'qs'
 
 document.cookie = 'a=b'
 
@@ -117,25 +118,67 @@ uploadEl!.addEventListener('click', e => {
 
 // 测试自定义合法状态码功能
 // tslint:disable-next-line: no-floating-promises
+// axios
+//   .get('/more/304')
+//   .then(res => {
+//     console.log(res)
+//   })
+//   .catch((e: AxiosError) => {
+//     console.log(e.message)
+//   })
+
+// tslint:disable-next-line: no-floating-promises
+// axios
+//   .get('/more/304', {
+//     validateStatus(status) {
+//       return status >= 200 && status < 400
+//     }
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
+//   .catch((e: AxiosError) => {
+//     console.log(e.message)
+//   })
+
+// 测试自定义参数序列化
+// tslint:disable-next-line: no-floating-promises
 axios
-  .get('/more/304')
+  .get('/more/get', {
+    params: new URLSearchParams('a=b&c=d')
+  })
   .then(res => {
     console.log(res)
-  })
-  .catch((e: AxiosError) => {
-    console.log(e.message)
   })
 
 // tslint:disable-next-line: no-floating-promises
 axios
-  .get('/more/304', {
-    validateStatus(status) {
-      return status >= 200 && status < 400
+  .get('/more/get', {
+    params: {
+      a: 1,
+      b: 2,
+      c: ['a', 'b', 'c']
     }
   })
   .then(res => {
     console.log(res)
   })
-  .catch((e: AxiosError) => {
-    console.log(e.message)
+
+const instanceP = axios.create({
+  paramsSerializer(params) {
+    return qs.stringify(params, { arrayFormat: 'brackets' })
+  }
+})
+
+// tslint:disable-next-line: no-floating-promises
+instanceP
+  .get('/more/get', {
+    params: {
+      a: 1,
+      b: 2,
+      c: ['a', 'b', 'c']
+    }
+  })
+  .then(res => {
+    console.log(res)
   })

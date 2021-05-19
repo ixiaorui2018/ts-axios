@@ -6,8 +6,8 @@ import transform from './transform'
 
 // 预处理请求 URL 按需将 params 拼接到 URL 后面以及处理 hash 值的内容
 function transformURL(config: AxiosRequestConfig): string {
-  const { url, params } = config
-  return buildURL(url!, params)
+  const { url, params, paramsSerializer } = config
+  return buildURL(url!, params, paramsSerializer)
 }
 
 // 处理请求头的数据类型
