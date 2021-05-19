@@ -5,7 +5,16 @@ import { createAxiosError } from '../tools/error'
 function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest()
-    const { data = null, url, method = 'GET', headers, responseType, timeout, cancelToken } = config
+    const {
+      data = null,
+      url,
+      method = 'GET',
+      headers,
+      responseType,
+      timeout,
+      cancelToken,
+      withCredentials
+    } = config
 
     // 自定义返回数据格式
     if (responseType) {
@@ -18,6 +27,11 @@ function xhr(config: AxiosRequestConfig): AxiosPromise {
     // 自定义超时时间
     if (timeout) {
       request.timeout = timeout
+    }
+
+    // 支持跨域携带 cookie
+    if (withCredentials) {
+      request.withCredentials = true
     }
 
     // 处理请求头
