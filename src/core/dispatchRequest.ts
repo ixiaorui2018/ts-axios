@@ -1,12 +1,15 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types/index'
-import { buildURL } from '../tools/url'
+import { buildURL, combineURL, isAbsoluteURL } from '../tools/url'
 import { flattenHeaders } from '../tools/headers'
 import xhr from './xhr'
 import transform from './transform'
 
 // 预处理请求 URL 按需将 params 拼接到 URL 后面以及处理 hash 值的内容
 function transformURL(config: AxiosRequestConfig): string {
-  const { url, params, paramsSerializer } = config
+  let { url, params, paramsSerializer, baseURL } = config
+  if (baseURL && !isAbsoluteURL(url!)) {
+    url = combineURL(baseURL, url)
+  }
   return buildURL(url!, params, paramsSerializer)
 }
 

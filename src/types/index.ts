@@ -83,6 +83,8 @@ export interface AxiosRequestConfig {
 
   paramsSerializer?: (params: any) => string
 
+  baseURL?: string
+
   [propName: string]: any
 }
 

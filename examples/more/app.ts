@@ -143,42 +143,51 @@ uploadEl!.addEventListener('click', e => {
 
 // 测试自定义参数序列化
 // tslint:disable-next-line: no-floating-promises
-axios
-  .get('/more/get', {
-    params: new URLSearchParams('a=b&c=d')
-  })
-  .then(res => {
-    console.log(res)
-  })
+// axios
+//   .get('/more/get', {
+//     params: new URLSearchParams('a=b&c=d')
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
 
 // tslint:disable-next-line: no-floating-promises
-axios
-  .get('/more/get', {
-    params: {
-      a: 1,
-      b: 2,
-      c: ['a', 'b', 'c']
-    }
-  })
-  .then(res => {
-    console.log(res)
-  })
+// axios
+//   .get('/more/get', {
+//     params: {
+//       a: 1,
+//       b: 2,
+//       c: ['a', 'b', 'c']
+//     }
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
 
-const instanceP = axios.create({
-  paramsSerializer(params) {
-    return qs.stringify(params, { arrayFormat: 'brackets' })
-  }
+// const instanceP = axios.create({
+//   paramsSerializer(params) {
+//     return qs.stringify(params, { arrayFormat: 'brackets' })
+//   }
+// })
+
+// tslint:disable-next-line: no-floating-promises
+// instanceP
+//   .get('/more/get', {
+//     params: {
+//       a: 1,
+//       b: 2,
+//       c: ['a', 'b', 'c']
+//     }
+//   })
+//   .then(res => {
+//     console.log(res)
+//   })
+
+const instanceB = axios.create({
+  baseURL: 'http://localhost:8080/more',
+  withCredentials: true
 })
-
 // tslint:disable-next-line: no-floating-promises
-instanceP
-  .get('/more/get', {
-    params: {
-      a: 1,
-      b: 2,
-      c: ['a', 'b', 'c']
-    }
-  })
-  .then(res => {
-    console.log(res)
-  })
+instanceB.get('/get').then(res => {
+  console.log(res)
+})
