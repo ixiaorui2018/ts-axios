@@ -20,7 +20,8 @@ function xhr(config: AxiosRequestConfig): AxiosPromise {
       xsrfCookieName,
       xsrfHeaderName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = config
 
     function configureRequest(): void {
@@ -53,6 +54,10 @@ function xhr(config: AxiosRequestConfig): AxiosPromise {
       // 处理请求头
       if (isFormData(data)) {
         delete headers['Content-Type']
+      }
+
+      if (auth) {
+        headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
 
       Object.keys(headers).forEach(name => {

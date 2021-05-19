@@ -33,6 +33,25 @@ document.cookie = 'a=b'
 //   console.log(res)
 // })
 
+// 测试 http 授权
+// tslint:disable-next-line: no-floating-promises
+axios
+  .post(
+    '/more/post',
+    {
+      a: 1
+    },
+    {
+      auth: {
+        username: 'ixiaorui2018',
+        password: '123456'
+      }
+    }
+  )
+  .then(res => {
+    console.log(res)
+  })
+
 // 测试进度监控功能
 const instance = axios.create()
 
