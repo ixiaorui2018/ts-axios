@@ -1,5 +1,6 @@
 import axios from '../../src/index'
 import NProgress from 'nprogress'
+import { AxiosError } from '../../src/tools/error'
 
 document.cookie = 'a=b'
 
@@ -35,22 +36,22 @@ document.cookie = 'a=b'
 
 // 测试 http 授权
 // tslint:disable-next-line: no-floating-promises
-axios
-  .post(
-    '/more/post',
-    {
-      a: 1
-    },
-    {
-      auth: {
-        username: 'ixiaorui2018',
-        password: '123456'
-      }
-    }
-  )
-  .then(res => {
-    console.log(res)
-  })
+// axios
+//   .post(
+//     '/more/post',
+//     {
+//       a: 1
+//     },
+//     {
+//       auth: {
+//         username: 'ixiaorui2018',
+//         password: '123456'
+//       }
+//     }
+//   )
+//   .then(res => {
+//     console.log(res)
+//   })
 
 // 测试进度监控功能
 const instance = axios.create()
@@ -113,3 +114,28 @@ uploadEl!.addEventListener('click', e => {
     instance.post('/more/upload', data)
   }
 })
+
+// 测试自定义合法状态码功能
+// tslint:disable-next-line: no-floating-promises
+axios
+  .get('/more/304')
+  .then(res => {
+    console.log(res)
+  })
+  .catch((e: AxiosError) => {
+    console.log(e.message)
+  })
+
+// tslint:disable-next-line: no-floating-promises
+axios
+  .get('/more/304', {
+    validateStatus(status) {
+      return status >= 200 && status < 400
+    }
+  })
+  .then(res => {
+    console.log(res)
+  })
+  .catch((e: AxiosError) => {
+    console.log(e.message)
+  })

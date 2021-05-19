@@ -21,7 +21,8 @@ function xhr(config: AxiosRequestConfig): AxiosPromise {
       xsrfHeaderName,
       onDownloadProgress,
       onUploadProgress,
-      auth
+      auth,
+      validateStatus
     } = config
 
     function configureRequest(): void {
@@ -71,7 +72,7 @@ function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     // 处理状态码各种情况
     function handleResponse(response: AxiosResponse) {
-      if ((response.status >= 200 && response.status < 300) || response.status === 304) {
+      if (!validateStatus || validateStatus(response.status)) {
         resolve(response)
       } else {
         reject(
